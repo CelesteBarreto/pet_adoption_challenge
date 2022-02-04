@@ -9,13 +9,19 @@ class CustomButtomFilter extends StatelessWidget {
       /* color: Colors.pink, */
       margin: const EdgeInsets.only(top: 30, left: 30),
       child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-              side: const BorderSide(width: 5.0, color: Colors.white),
-              primary: const Color(0xfffefefe),
-              fixedSize: const Size(45, 60)),
-          onPressed: () {},
-          child: const Icon(Icons.filter_list, size: 30, color: Color(0xffaeaeae))),
+        style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+            side: const BorderSide(width: 5.0, color: Colors.white),
+            primary: const Color(0xfffefefe),
+            fixedSize: const Size(45, 60)),
+        onPressed: () {},
+        child: Image.asset(
+          'assets/images/filter.png',
+          color: Color(0xffaeaeae),
+          width: 30,
+          height: 30,
+        ), /*  Icon(Icons.filter_list, size: 30, color: Color(0xffaeaeae)) */
+      ),
     );
   }
 }

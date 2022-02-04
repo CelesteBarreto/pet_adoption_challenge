@@ -139,48 +139,54 @@ class _HomePageState extends State<HomePage> {
                             width: 120,
                             height: 150,
                             margin: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Card(
-                              margin: const EdgeInsets.all(10),
-                              color: Colors.white,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(left: 10),
-                                    width: 110,
-                                    height: 110,
-                                    child: Image.asset(
-                                      'assets/images/dog1.png',
-                                      fit: BoxFit.cover,
-                                    ),
-                                    decoration:
-                                        BoxDecoration(color: Colors.pink, borderRadius: BorderRadius.circular(5)),
-                                  ),
-                                  const SizedBox(
-                                    height: 110,
-                                    width: 150,
-                                    child: ListileComponent(
-                                      nome: 'Nome',
-                                      raca: 'Raça',
-                                      sexo: 'sexo',
-                                      age: 'age',
-                                      geo: '2km',
-                                    ),
-                                  ),
-                                  SizedBox(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Card(
+                                margin: const EdgeInsets.all(10),
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(left: 10),
+                                      width: 110,
                                       height: 110,
-                                      width: 80,
-                                      child: Stack(children: [
-                                        Positioned(
-                                          right: 7,
-                                          top: 7,
-                                          child: Icon(
-                                            index == 0 ? Icons.favorite : Icons.favorite_border,
-                                            color: index == 0 ? Colors.red : Colors.black,
-                                          ),
-                                        )
-                                      ]))
-                                ],
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.asset(
+                                          'assets/images/dog1.png',
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      decoration: BoxDecoration(
+                                          /* color: Colors.pink, */ borderRadius: BorderRadius.circular(10)),
+                                    ),
+                                    const SizedBox(
+                                      height: 110,
+                                      width: 150,
+                                      child: ListileComponent(
+                                        nome: 'Nome',
+                                        raca: 'Raça',
+                                        sexo: 'sexo',
+                                        age: 'age',
+                                        geo: '2km',
+                                      ),
+                                    ),
+                                    SizedBox(
+                                        height: 110,
+                                        width: 80,
+                                        child: Stack(children: [
+                                          Positioned(
+                                            right: 7,
+                                            top: 7,
+                                            child: Icon(
+                                              index == 0 ? Icons.favorite : Icons.favorite_border,
+                                              color: index == 0 ? Colors.red : Colors.black,
+                                            ),
+                                          )
+                                        ]))
+                                  ],
+                                ),
                               ),
                             ),
                           );

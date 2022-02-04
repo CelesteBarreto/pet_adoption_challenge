@@ -19,7 +19,10 @@ class ListileComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(nome),
+      title: Text(
+        nome,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+      ),
       subtitle: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,6 +34,7 @@ class ListileComponent extends StatelessWidget {
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const Icon(
                 Icons.location_on,
