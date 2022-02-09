@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pet_adoption_challenge/components/custom_card.dart';
 
 import 'components/buttom_filter.dart';
 import 'components/custom_app_bar.dart';
 import 'components/custom_icon.dart';
-import 'components/listile_component.dart';
+import 'dart:convert';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,52 +15,29 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String keyObj = "";
+  List pets = [];
+
+  Future<void> readJson() async {
+    final String response = await rootBundle.loadString('assets/url/pets.json');
+    final data = await json.decode(response);
+    setState(() {
+      pets = data["dogs"];
+    });
+  }
+
   @override
   void initState() {
+    readJson();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    List pets = ['Dogs', 'Cats', 'Birds', 'Fishes'];
+    List names = ['Dogs', 'Cats', 'Birds', 'Fishes'];
 
-    Map<String, dynamic> myPetsMap = {
-      "dogs": [
-        {
-          "url": "assets/images/dog1.png",
-          "name": "Sparky",
-          "breed": "Golden Retriever",
-          "sexo": "Female",
-          "age": "8 months old",
-          "geo": "2.5"
-        },
-        {
-          "url": "assets/images/dog2.png",
-          "name": "Charlie",
-          "breed": "Boston Terrier",
-          "sexo": "Male",
-          "age": "1.5 years old",
-          "geo": "2.8 Kms away"
-        },
-        {
-          "url": "assets/images/dog3.png",
-          "name": "Sparky",
-          "breed": "Golden Retriever",
-          "sexo": "Sparky",
-          "age": "Sparky",
-          "geo": "2.5"
-        },
-        {
-          "url": "assets/images/dog4.png",
-          "name": "Sparky",
-          "breed": "Golden Retriever",
-          "sexo": "Sparky",
-          "age": "Sparky",
-          "geo": "2.5"
-        }
-      ]
-    };
+    //converter lista json para list animais
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -91,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                         child: ListView.builder(
                           physics: const ScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                           scrollDirection: Axis.horizontal,
-                          itemCount: pets.length,
+                          itemCount: names.length,
                           itemBuilder: (context, index) {
                             return Container(
                               width: 100,
@@ -109,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                                 label: FittedBox(
                                   fit: BoxFit.fitWidth,
                                   child: Text(
-                                    pets[index],
+                                    names[index],
                                     style: TextStyle(
                                         color: index == 0 ? Color(0xfffefefe) : Colors.black,
                                         fontSize: 16,
@@ -140,55 +118,16 @@ class _HomePageState extends State<HomePage> {
                             height: 150,
                             margin: const EdgeInsets.symmetric(horizontal: 10),
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Card(
-                                margin: const EdgeInsets.all(10),
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.only(left: 10),
-                                      width: 110,
-                                      height: 110,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: Image.asset(
-                                          'assets/images/dog1.png',
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      decoration: BoxDecoration(
-                                          /* color: Colors.pink, */ borderRadius: BorderRadius.circular(10)),
-                                    ),
-                                    const SizedBox(
-                                      height: 110,
-                                      width: 150,
-                                      child: ListileComponent(
-                                        nome: 'Nome',
-                                        raca: 'Raça',
-                                        sexo: 'sexo',
-                                        age: 'age',
-                                        geo: '2km',
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        height: 110,
-                                        width: 80,
-                                        child: Stack(children: [
-                                          Positioned(
-                                            right: 7,
-                                            top: 7,
-                                            child: Icon(
-                                              index == 0 ? Icons.favorite : Icons.favorite_border,
-                                              color: index == 0 ? Colors.red : Colors.black,
-                                            ),
-                                          )
-                                        ]))
-                                  ],
-                                ),
-                              ),
-                            ),
+                                borderRadius: BorderRadius.circular(20),
+                                child: CustomCard(
+                                  index: index,
+                                  url: pets[index]["url"],
+                                  nome: pets[index]["name"],
+                                  age: pets[index]["age"],
+                                  geo: pets[index]["geo"],
+                                  raca: pets[index]["breed"],
+                                  sexo: pets[index]["sexo"],
+                                )),
                           );
                         },
                       ),
