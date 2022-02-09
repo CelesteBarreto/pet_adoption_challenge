@@ -30,7 +30,7 @@ class ListileComponent extends StatelessWidget {
           Text(raca),
           Text('$sexo, $age'),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
