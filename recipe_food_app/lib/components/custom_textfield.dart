@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
   final TextEditingController controller;
   final String text;
-  final IconData? icon;
+  final Widget? icon;
   final IconData? iconSuffix;
   final String? labelText;
+  final List<TextInputFormatter>? inputFormatters;
   const CustomTextField({
     Key? key,
     required this.text,
     required this.controller,
-    required this.icon,
+    this.icon,
     this.keyboardType,
     this.validator,
     this.iconSuffix,
     this.labelText,
+    this.inputFormatters,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     //criar na tela inicial e chamar por contrutor
     return TextFormField(
+      inputFormatters: inputFormatters,
       validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       //focusNode: FocusNode(canRequestFocus: true),
@@ -36,14 +40,10 @@ class CustomTextField extends StatelessWidget {
         // disabledBorder: new OutlineInputBorder(borderSide: new BorderSide(color: Color(0xFFFAFAFA), width: 1)),
         prefix: Container(
           margin: EdgeInsets.only(left: 15, right: 25),
-          child: Icon(
-            icon,
-            color: Color(0xFF918AE2),
-            size: 25,
-          ),
+          child: icon,
         ),
         isDense: true,
-        contentPadding: const EdgeInsets.only(bottom: 10, top: 25),
+        contentPadding: const EdgeInsets.only(bottom: 5, top: 15),
         /* errorText: 'Invalid', */ hintText: text,
         suffix: Container(
           margin: EdgeInsets.only(right: 25),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
+  final String text;
   final Function()? onPressed;
-  const CustomElevatedButton({Key? key, this.onPressed}) : super(key: key);
+  const CustomElevatedButton({Key? key, this.onPressed, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +17,8 @@ class CustomElevatedButton extends StatelessWidget {
             primary: Color(0xFF918AE2),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
         child: Text(
-          'Sign Up',
-          style: TextStyle(color: Colors.white),
+          text,
+          style: TextStyle(color: Colors.white, fontSize: 18),
         ),
       ),
     );
