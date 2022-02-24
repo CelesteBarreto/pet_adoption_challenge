@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Color myColor = Color(0xFF918AE2);
     return MaterialApp(
       theme: ThemeData(
         // This is the theme of your application.
@@ -23,9 +24,11 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
+      /* MaterialColor(1, {1: Color(0xFF918AE2)})), */
       home: const HomePage(),
+      color: myColor,
     );
   }
 }
