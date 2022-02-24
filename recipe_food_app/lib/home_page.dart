@@ -13,10 +13,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isObscureText = true;
   final _formKey = GlobalKey<FormState>();
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
+
   Map person = {'nome': 'nome', 'email': 'email', 'senha': 'senha'};
 
   @override
@@ -41,6 +43,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   IconButton(
+                    alignment: Alignment.centerLeft,
                     padding: EdgeInsets.all(0.0),
                     onPressed: () {},
                     icon: Icon(Icons.arrow_back_rounded),
@@ -76,7 +79,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Positioned(
-              top: 220,
+              top: MediaQuery.of(context).viewInsets.bottom > 0.0 ? 0.0 : 220,
               left: 0,
               right: 0,
               child: Container(
@@ -130,12 +133,14 @@ class _HomePageState extends State<HomePage> {
                           CustomText(text: 'Password', fontSize: 16),
                           SizedBox(height: 15),
                           CustomTextField(
+                            onPressed: () => setState(() => isObscureText = !isObscureText),
+                            obscureText: isObscureText,
                             icon: Icon(
                               Icons.lock_outline_rounded,
                               color: Color(0xFF918AE2),
                               size: 25,
                             ),
-                            iconSuffix: Icons.remove_red_eye_outlined,
+                            iconSuffix: isObscureText ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,
                             controller: controllerPassword,
                             text: 'Password',
                             validator: (value) {
@@ -145,18 +150,19 @@ class _HomePageState extends State<HomePage> {
                               return null;
                             },
                           ),
+                          SizedBox(height: 15),
                           SizedBox(height: 70),
                           CustomElevatedButton(
                             text: 'Sign Up',
                             onPressed: () {
-                              /* if (_formKey.currentState!.validate()) {
+                              if (_formKey.currentState!.validate()) {
                                 person['nome'] = controllerName.text;
                                 person['email'] = controllerEmail.text;
                                 return Navigator.of(context)
-                                    .push(MaterialPageRoute(builder: (BuildContext context) => ()));
-                              } */
-                              Navigator.of(context)
-                                  .push(MaterialPageRoute(builder: (BuildContext context) => PerfilScreen()));
+                                    .push(MaterialPageRoute(builder: (BuildContext context) => PerfilScreen()));
+                              }
+                              /*  Navigator.of(context)
+                                  .push(MaterialPageRoute(builder: (BuildContext context) => PerfilScreen())); */
                             },
                           ),
                         ],
@@ -172,3 +178,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
+//usar o cpf feito no outro proj
+//confirmação de senha
