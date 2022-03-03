@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_food_app/components/custom_text.dart';
+import 'package:recipe_food_app/components/select_formfield.dart';
 
-import 'components/camera_custom.dart';
-import 'components/custom_elevated_button.dart';
-import 'components/custom_text.dart';
-import 'components/custom_textfield.dart';
+import '../components/camera_custom.dart';
+import '../components/custom_elevated_button.dart';
+import '../components/custom_textfield.dart';
+
+import '../models/countries.dart';
+import '../models/flag_model.dart';
+import '../models/mask_class.dart';
 import 'home_page.dart';
-
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-
-import 'models/flag_model.dart';
 
 class PerfilScreen extends StatefulWidget {
   const PerfilScreen({Key? key}) : super(key: key);
@@ -28,41 +29,13 @@ class _PerfilScreenState extends State<PerfilScreen> {
 
   FlagCountryModel _flagChoose = FlagCountryModel(flagImage: '', nameCountry: '');
 
-  List<FlagCountryModel> listadeModel = [
-    FlagCountryModel(
-        flagImage:
-            'https://w7.pngwing.com/pngs/397/707/png-transparent-flag-of-brazil-illustration-flag-of-brazil-flags-of-the-world-flag-of-australia-brazilian-flag-template-miscellaneous-flag-sphere.png',
-        nameCountry: 'Brasil'),
-    FlagCountryModel(
-        flagImage:
-            'https://w7.pngwing.com/pngs/938/278/png-transparent-flag-of-the-united-states-flags-of-the-world-united-states-flag-united-states-flag-of-the-united-states.png',
-        nameCountry: 'EUA'),
-    FlagCountryModel(
-        flagImage:
-            'https://img2.gratispng.com/20180319/dxe/kisspng-flag-font-spain-5ab06220000828.0392048815215088960001.jpg',
-        nameCountry: 'Espanha'),
-    FlagCountryModel(
-        flagImage:
-            'https://img2.gratispng.com/20171202/d91/china-flag-png-file-5a228f61925c94.5359207415122143695995.jpg',
-        nameCountry: 'China'),
-    FlagCountryModel(
-        flagImage:
-            'https://img2.gratispng.com/20180820/kgy/kisspng-flag-of-south-korea-flag-of-north-korea-the-new-home-of-betting-bet-me-5b7b4417139fe3.2003672215348050150804.jpg',
-        nameCountry: 'Coréia do Sul'),
-    FlagCountryModel(
-        flagImage:
-            'https://img2.gratispng.com/20181120/zjv/kisspng-flag-of-south-africa-vector-graphics-stock-illustr-south-africa-vs-india-odds-5bf4703f1e9b99.8971805515427461751254.jpg',
-        nameCountry: 'África'),
-    FlagCountryModel(
-        flagImage:
-            'https://img1.gratispng.com/20180401/yye/kisspng-flag-of-portugal-national-flag-flag-of-poland-portugal-5ac0b5f3e18818.0715604115225789319238.jpg',
-        nameCountry: 'Portugal'),
-  ];
+  Countries countries = Countries();
+
+  MaskCLass mascaras = MaskCLass();
 
   @override
   void initState() {
     super.initState();
-    _flagChoose = listadeModel[0];
   }
 
   @override
@@ -71,20 +44,8 @@ class _PerfilScreenState extends State<PerfilScreen> {
     super.dispose();
   }
 
-  void _onDropDownItemSelected(FlagCountryModel? newSelectedBFlag) {
-    setState(() {
-      _flagChoose = newSelectedBFlag!;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    var telefone = MaskTextInputFormatter(
-        mask: '(##) #####-####', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
-    var cpf = MaskTextInputFormatter(
-        mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
-    var rg = MaskTextInputFormatter(
-        mask: '##.###.###-#', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
     return Scaffold(
       backgroundColor: Color(0xFFFAFAFA),
       body: Container(
@@ -165,41 +126,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
                           SizedBox(height: 15),
                           CustomText(text: 'Country', fontSize: 16),
                           SizedBox(height: 15),
-                          FormField(
-                            builder: (FormFieldState<String> state) {
-                              return InputDecorator(
-                                decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.fromLTRB(12, 10, 20, 20),
-                                    errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<FlagCountryModel>(
-                                      icon: Icon(
-                                        Icons.keyboard_arrow_down,
-                                        size: 30,
-                                      ),
-                                      isDense: true,
-                                      isExpanded: true,
-                                      onChanged: (FlagCountryModel? newSelectedFlag) {
-                                        _onDropDownItemSelected(newSelectedFlag);
-                                      },
-                                      value: _flagChoose,
-                                      items: listadeModel
-                                          .map<DropdownMenuItem<FlagCountryModel>>((FlagCountryModel value) {
-                                        return DropdownMenuItem(
-                                            value: value,
-                                            child: Row(
-                                              children: [
-                                                new CircleAvatar(backgroundImage: new NetworkImage(value.flagImage)),
-                                                SizedBox(width: 15),
-                                                Text(value.nameCountry)
-                                              ],
-                                            ));
-                                      }).toList()),
-                                ),
-                              );
-                            },
-                          ),
+                          SelectFormFieldCustom(),
                           SizedBox(height: 15),
                           CustomText(text: 'CPF', fontSize: 16),
                           SizedBox(height: 15),
@@ -220,7 +147,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
                               ),
                             ),
                             keyboardType: TextInputType.number,
-                            inputFormatters: [cpf],
+                            inputFormatters: [mascaras.cpf],
                           ),
                           SizedBox(height: 15),
                           CustomText(text: 'RG', fontSize: 16),
@@ -242,13 +169,13 @@ class _PerfilScreenState extends State<PerfilScreen> {
                               ),
                             ),
                             keyboardType: TextInputType.number,
-                            inputFormatters: [rg],
+                            inputFormatters: [mascaras.rg],
                           ),
                           SizedBox(height: 15),
                           CustomText(text: 'Telefone', fontSize: 16),
                           SizedBox(height: 15),
                           CustomTextField(
-                            inputFormatters: [telefone],
+                            inputFormatters: [mascaras.telefone],
                             keyboardType: TextInputType.phone,
                             icon: Icon(
                               Icons.phone_android,
@@ -274,9 +201,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
                               }
                             },
                           ),
-                          SizedBox(
-                            height: 60,
-                          )
+                          SizedBox(height: 60)
                         ],
                       ),
                     ),

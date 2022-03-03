@@ -1,12 +1,11 @@
-/* import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:recipe_food_app/models/countries.dart';
 
 import 'package:recipe_food_app/models/flag_model.dart';
 
 class SelectFormFieldCustom extends StatefulWidget {
-  final FlagCountryModel flagChoose;
   const SelectFormFieldCustom({
-    Key? key, this.flagChoose,
-   
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -15,6 +14,14 @@ class SelectFormFieldCustom extends StatefulWidget {
 
 class _SelectFormFieldCustomState extends State<SelectFormFieldCustom> {
   FlagCountryModel _flagChoose = FlagCountryModel(flagImage: '', nameCountry: '');
+  Countries countries = Countries();
+
+  @override
+  void initState() {
+    super.initState();
+    _flagChoose = countries.listadeModel[0];
+  }
+
   void _onDropDownItemSelected(FlagCountryModel? newSelectedBFlag) {
     setState(() {
       _flagChoose = newSelectedBFlag!;
@@ -32,13 +39,17 @@ class _SelectFormFieldCustomState extends State<SelectFormFieldCustom> {
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<FlagCountryModel>(
+                icon: Icon(
+                  Icons.keyboard_arrow_down,
+                  size: 30,
+                ),
                 isDense: true,
                 isExpanded: true,
                 onChanged: (FlagCountryModel? newSelectedFlag) {
                   _onDropDownItemSelected(newSelectedFlag);
                 },
                 value: _flagChoose,
-                items: listadeModel.map<DropdownMenuItem<FlagCountryModel>>((FlagCountryModel value) {
+                items: countries.listadeModel.map<DropdownMenuItem<FlagCountryModel>>((FlagCountryModel value) {
                   return DropdownMenuItem(
                       value: value,
                       child: Row(
@@ -55,4 +66,3 @@ class _SelectFormFieldCustomState extends State<SelectFormFieldCustom> {
     );
   }
 }
- */
